@@ -1,0 +1,13 @@
+<spring mvc프로젝트 설정 - maven기반이 아닐경우>
+1. Dynamic web project생성
+2. spring 라이브러리를 lib복사
+3. web.xml에 DispatcherServlet을 등록
+	=> 모든 요청이 DispatcherServlet을 통해서 진입하도록 frontController패턴이 적용
+4. web프로젝트 내부에서 사용할 스프링설정파일을 생성
+	=> 기본으로 DispatcherServlet내부에서 인식할 설정파일명
+	설정파일명 : [서블릿명] - servlet.xml
+5. Controller작성(기본 web에서 서블릿역할과 동일)
+6. Controller를 스프링 설정파일에 등록
+	/로 시작하는 path를 등록하기 위해서 <bean>의 name속성에 등록한다.
+7. 필요한 view작성
+8. 스프링설정파일에 <bean>의 name속성에 정의한 url로 요청
