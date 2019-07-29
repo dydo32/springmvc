@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean name="/index.do" class="main.IndexController"/>	
+	
+	<import resource="data.xml"/>
+	
+	<bean id="depttemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg ref="ds" />
+	</bean>
+	
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+	
+	<bean id="deptdao" class="dept.dao.DeptDAOImpl">
+		<property name="template" ref="depttemplate"></property>
+	</bean>
+	
+	<bean name="/dept/count.do" class="dept.controller.DeptCountController">
+		<constructor-arg ref="deptdao"/>
+	</bean>
+	<bean name="/dept/list.do" class="dept.controller.DeptListController">
+		<constructor-arg ref="deptdao"/>
+	</bean>
+</beans>

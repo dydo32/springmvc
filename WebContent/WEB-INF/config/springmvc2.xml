@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean name="/index.do" class="main.IndexController"/>
+	
+	<import resource="data.xml"/>
+	
+	<!-- ========== spring에서 제공하는 API ========= -->
+	<bean id="template" class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg ref="ds" />
+	</bean>
+	
+	<!-- ========== ViewResolver등록 ========== -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+	
+	<!-- ========== dao등록 ========== -->
+	<bean id="empdao" class="emp.dao.MyEmpDAOImpl">
+		<property name="template" ref="template"></property>
+	</bean>
+	
+	<!-- ========= 컨트롤러 등록 ========== -->
+	<bean name="/count.do" class="emp.controller.CountController">
+		<constructor-arg ref="empdao"/>
+	</bean>
+	<bean name="/list.do" class="emp.controller.ListController">
+		<constructor-arg ref="empdao"/>
+	</bean>
+	<bean name="/search_form.do" class="emp.controller.SearchFormController"/>
+	
+</beans>
